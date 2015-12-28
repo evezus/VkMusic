@@ -1,4 +1,4 @@
-package vne.vkmusic.friend;
+package vne.vkmusic.model;
 
 /**
  * Created by volke on 28.12.2015.

@@ -1,6 +1,17 @@
-package vne.vkmusic.audio;
+package vne.vkmusic.model;
 
-public class VkAudio {
+import android.util.Log;
+
+import com.vk.sdk.api.VKResponse;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Audio {
 
     private int id;
 
@@ -65,7 +76,7 @@ public class VkAudio {
 
 
     public void setId(int id) {
-            this.id = id;
+        this.id = id;
     }
 
     public void setOwner_id(int owner_id) {
@@ -103,5 +114,31 @@ public class VkAudio {
     public void setDate(int date) {
         this.date = date;
     }
+
+    public static List<Audio> parseJson(VKResponse response) {
+        ArrayList<Audio> list = new ArrayList<>();
+        try {
+            JSONArray arr = response.json.getJSONObject("response").getJSONArray("items");
+            for (int i = 0; i< arr.length(); i++) {
+                Audio audio = new Audio();
+                JSONObject json = arr.getJSONObject(i);
+
+                audio.setId(json.optInt("id"));
+                audio.setOwner_id(json.optInt("owner_id"));
+                audio.setArtist(json.optString("artist"));
+                audio.setTitle(json.optString("title"));
+                audio.setDuration(json.optInt("duration"));
+                audio.setDate(json.optInt("date"));
+                audio.setUrl(json.optString("url"));
+                audio.setLyrics_id(json.optInt("lyrics_id"));
+                audio.setGenre_id(json.optInt("genre_id"));
+                list.add(audio);
+            }
+        }catch (JSONException e){
+            Log.d("JSONException", e.toString());
+        }
+        return list;
+    }
+
 }
 

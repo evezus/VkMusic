@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 
 
 import com.vk.sdk.VKAccessToken;
@@ -11,8 +12,14 @@ import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKRequest;
+
+import java.util.List;
 
 import vne.vkmusic.R;
+import vne.vkmusic.adapters.PlayerListAdapter;
+import vne.vkmusic.model.Audio;
+import vne.vkmusic.services.AudioService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 VKSdk.login(LoginActivity.this, VKScope.AUDIO);
             }
         });
+
     }
 
     @Override
