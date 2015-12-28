@@ -16,7 +16,8 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/song_tittle"
             android:layout_marginLeft="15dp"
-            android:text="Song Tittle" />
+            android:text="Song Tittle"
+            android:layout_marginBottom="5dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,7 +25,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/song_author"
             android:layout_marginLeft="15dp"
-            android:text="Song Author" />
+            android:text="Song Author"
+            android:layout_marginBottom="10dp" />
     </LinearLayout>
 
     <TextView
