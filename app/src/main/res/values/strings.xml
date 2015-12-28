@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">VkMusic</string>
+    <integer name="com_vk_sdk_AppId">5179427</integer>
+
     <string name="title_activity_list">Music List</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
