@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 
 
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKError;
 
 import vne.vkmusic.R;
 
@@ -17,8 +20,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(VKSdk.isLoggedIn()) {
-            new Intent(this, ListActivity.class);
+        if (VKSdk.isLoggedIn()) {
+            startActivity(new Intent(this, ListActivity.class));
             finish();
         }
 
@@ -29,7 +32,24 @@ public class LoginActivity extends AppCompatActivity {
                 VKSdk.login(LoginActivity.this, VKScope.AUDIO);
             }
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+            @Override
+            public void onResult(VKAccessToken res) {
+                startActivity(new Intent(LoginActivity.this, ListActivity.class));
+                finish();
+            }
 
+            @Override
+            public void onError(VKError error) {
+
+            }
+
+        })) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
