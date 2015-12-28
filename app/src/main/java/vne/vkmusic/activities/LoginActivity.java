@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_login);
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_auth).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 VKSdk.login(LoginActivity.this, VKScope.AUDIO);

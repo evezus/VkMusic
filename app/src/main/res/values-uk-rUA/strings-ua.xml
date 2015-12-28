@@ -9,4 +9,14 @@
 
     <string name="action_settings">Налаштування</string>
     <string name="auth_text"> Авторизуватися </string>
+
+    <!-- Бокова висувна панель -->
+    <string name="side_my_audio">Мої аудіо</string>
+    <string name="side_friends_audio">Музика друзів</string>
+    <string name="side_cached">Кешовані аудіозаписи</string>
+    <string name="side_favorite">Улюблені</string>
+
+    <string name="side_settings">Налаштування</string>
+    <string name="side_logout">Зміна акаунту</string>
+    <string name="side_exit">Вихід</string>
 </resources>

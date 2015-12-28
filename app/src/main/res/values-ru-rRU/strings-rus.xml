@@ -10,4 +10,13 @@
     <string name="action_settings">Настройки</string>
     <string name="auth_text">Авторизация</string>
 
+    <!-- Боковая выдвижная панель -->
+    <string name="side_my_audio">Мои аудио</string>
+    <string name="side_friends_audio">Музыка друзей</string>
+    <string name="side_cached">Кэшированные аудио</string>
+    <string name="side_favorite">Любимые</string>
+
+    <string name="side_settings">Настройки</string>
+    <string name="side_logout">Смена акаунта</string>
+    <string name="side_exit">Выход</string>
 </resources>
