@@ -18,7 +18,7 @@ public class AudioService extends VKRequest.VKRequestListener {
     public List<Audio> list;
 
     public void getAudio() {
-        VKRequest request = VKApi.users().get();
+        VKRequest request = VKApi.audio().get();
         request.executeWithListener(this);
     }
 

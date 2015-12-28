@@ -74,7 +74,7 @@ public class ListActivity extends AppCompatActivity
             }
         });
 
-        VKRequest request = VKApi.users().get();
+        VKRequest request = VKApi.audio().get();
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
