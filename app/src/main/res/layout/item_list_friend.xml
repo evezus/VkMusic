@@ -7,14 +7,12 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:id="@+id/imageView2"
-            android:layout_weight="1" />
+            android:id="@+id/imageView2" />
     </LinearLayout>
 
 </LinearLayout>

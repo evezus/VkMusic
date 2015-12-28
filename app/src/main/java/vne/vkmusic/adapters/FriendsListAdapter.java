@@ -8,12 +8,12 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 
-import vne.vkmusic.audio.VkAudio;
-import vne.vkmusic.friend.Friend;
+import vne.vkmusic.model.Friend;
 
 /**
  * Created by volke on 28.12.2015.
  */
+// TODO ДОДЕЛАТ НАДО КУРВЕ //
 public class FriendsListAdapter extends BaseAdapter{
     private ArrayList<Friend> listData;
     private LayoutInflater layoutInflater;
