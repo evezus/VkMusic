@@ -39,27 +39,28 @@ public class PlayerListAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewAudio audio;
+        ViewFriend audio;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.item_list_audio, null);
-            audio = new ViewAudio();
-            audio.title = (TextView) convertView.findViewById(R.id.song_tittle);
-            audio.artist = (TextView) convertView.findViewById(R.id.song_author);
-            audio.duration = (TextView) convertView.findViewById(R.id.song_duration);
+            convertView = layoutInflater.inflate(R.layout.item_list_friend, null);
+            audio = new ViewFriend();
+            /* TODO */
+            audio.first_name = (TextView) convertView.findViewById(R.id.song_tittle);
+            audio.last_name = (TextView) convertView.findViewById(R.id.song_author);
+            audio.photo_url = (TextView) convertView.findViewById(R.id.song_duration);
             convertView.setTag(audio);
         } else {
-            audio = (ViewAudio) convertView.getTag();
+            audio = (ViewFriend) convertView.getTag();
         }
 
-        audio.title.setText(listData.get(position).getTitle());
-        audio.artist.setText(listData.get(position).getArtist());
-        audio.duration.setText(Duration.secondsToTimer(listData.get(position).getDuration()));
+        audio.first_name.setText(listData.get(position).getTitle());
+        audio.last_name.setText(listData.get(position).getArtist());
+        audio.photo_url.setText(Duration.secondsToTimer(listData.get(position).getDuration()));
         return convertView;
     }
 
-    static class ViewAudio {
-        TextView title;
-        TextView artist;
-        TextView duration;
+    static class ViewFriend {
+        TextView first_name;
+        TextView last_name;
+        TextView photo_url;
     }
 }
