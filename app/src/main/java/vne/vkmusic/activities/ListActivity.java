@@ -3,6 +3,7 @@ package vne.vkmusic.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,12 +14,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import vne.vkmusic.R;
+import vne.vkmusic.adapters.PlayerListAdapter;
+import vne.vkmusic.model.Audio;
+import vne.vkmusic.services.AudioService;
 import vne.vkmusic.services.UserService;
 import vne.vkmusic.utils.DownloadImageTask;
 
@@ -58,7 +73,26 @@ public class ListActivity extends AppCompatActivity
                 ((TextView) findViewById(R.id.userLink)).setText(UserService.USER_LINK + String.valueOf(user.id));
             }
         });
+
+        VKRequest request = VKApi.users().get();
+        request.executeWithListener(new VKRequest.VKRequestListener() {
+            @Override
+            public void onComplete(VKResponse response) {
+                ListView tx = (ListView)findViewById(R.id.listView);
+                tx.setAdapter( new PlayerListAdapter(ListActivity.this,(ArrayList) Audio.parseJson(response)) );
+            }
+        });
+
+
+
     }
+
+    ///*
+
+    ///*
+
+
+
 
     @Override
     public void onBackPressed() {

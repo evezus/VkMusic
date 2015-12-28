@@ -9,16 +9,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import vne.vkmusic.audio.Duration;
-import vne.vkmusic.audio.VkAudio;
+import vne.vkmusic.utils.Duration;
+import vne.vkmusic.model.Audio;
 import vne.vkmusic.R;
 
 
 public class PlayerListAdapter extends BaseAdapter {
-    private ArrayList<VkAudio> listData;
+    private ArrayList<Audio> listData;
     private LayoutInflater layoutInflater;
 
-    public PlayerListAdapter(Context aContext, ArrayList<VkAudio> listData) {
+    public PlayerListAdapter(Context aContext, ArrayList<Audio> listData) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }
