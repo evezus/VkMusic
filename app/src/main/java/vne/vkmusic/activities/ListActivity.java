@@ -12,8 +12,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.vk.sdk.api.model.VKApiUser;
 
 import vne.vkmusic.R;
+import vne.vkmusic.services.UserService;
+import vne.vkmusic.utils.DownloadImageTask;
 
 public class ListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +49,15 @@ public class ListActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        new UserService().getCurrentUser(new UserService.Listener() {
+            @Override
+            public void onFinished(VKApiUser user) {
+                new DownloadImageTask((ImageView) findViewById(R.id.userImg)).execute(user.photo_100);
+                ((TextView) findViewById(R.id.userName)).setText(user.first_name + " " + user.last_name);
+                ((TextView) findViewById(R.id.userLink)).setText(UserService.USER_LINK + String.valueOf(user.id));
+            }
+        });
     }
 
     @Override
