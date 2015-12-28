@@ -29,6 +29,6 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         vkAccessTokenTracker.startTracking();
-        VKSdk.initialize(this).withPayments();
+        VKSdk.initialize(this);
     }
 }
