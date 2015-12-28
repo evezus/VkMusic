@@ -20,7 +20,7 @@
             android:title="@string/side_favorite" />
     </group>
 
-    <item android:title="ertsdfgd">
+    <item android:title="">
         <menu>
             <item
                 android:id="@+id/side_settings"
