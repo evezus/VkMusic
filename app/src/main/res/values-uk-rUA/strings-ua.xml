@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">VkMusic</string>
+    <string name="title_activity_list">Список аудіо</string>
+
+    <string name="navigation_drawer_open">Відкрити бокове меню</string>
+    <string name="navigation_drawer_close">Закрити бокове меню</string>
+
+    <string name="action_settings">Налаштування</string>
+    <string name="auth_text"> Авторизуватися </string>
+</resources>
