@@ -1,9 +1,5 @@
 package vne.vkmusic.services;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKParameters;
@@ -13,9 +9,6 @@ import com.vk.sdk.api.model.VKApiUser;
 
 import org.json.JSONException;
 
-/**
- * Created by evezus on 28.12.2015.
- */
 public class UserService {
 
     public static final String USER_LINK = "http://vk.com/id";

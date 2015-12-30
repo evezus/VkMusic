@@ -9,13 +9,19 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="vne.vkmusic.activities.ListActivity"
-    tools:showIn="@layout/app_bar_list">
-
+    tools:context=".activities.ListAudioActivity"
+    tools:showIn="@layout/app_bar_audio_list">
+<ViewFlipper
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/viewFlipper">
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/listAudioView" />
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listFriendsView" />
+</ViewFlipper>
 </RelativeLayout>

@@ -1,12 +1,8 @@
 package vne.vkmusic.services;
 
-import android.content.Context;
-
 import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
-import com.vk.sdk.api.model.VKApiUser;
 
 import java.util.List;
 

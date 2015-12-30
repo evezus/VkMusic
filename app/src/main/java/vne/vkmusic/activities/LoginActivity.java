@@ -1,25 +1,17 @@
 package vne.vkmusic.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ListView;
-
 
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKRequest;
-
-import java.util.List;
 
 import vne.vkmusic.R;
-import vne.vkmusic.adapters.PlayerListAdapter;
-import vne.vkmusic.model.Audio;
-import vne.vkmusic.services.AudioService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (VKSdk.isLoggedIn()) {
-            startActivity(new Intent(this, ListActivity.class));
+            startActivity(new Intent(this, ListAudioActivity.class));
             finish();
         }
 
@@ -47,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
-                startActivity(new Intent(LoginActivity.this, ListActivity.class));
+                startActivity(new Intent(LoginActivity.this, ListAudioActivity.class));
                 finish();
             }
 

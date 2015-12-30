@@ -1,11 +1,10 @@
 package vne.vkmusic.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,37 +12,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
 import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUser;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import vne.vkmusic.R;
+import vne.vkmusic.adapters.FriendsListAdapter;
 import vne.vkmusic.adapters.PlayerListAdapter;
 import vne.vkmusic.model.Audio;
-import vne.vkmusic.services.AudioService;
+import vne.vkmusic.model.Friend;
 import vne.vkmusic.services.UserService;
 import vne.vkmusic.utils.DownloadImageTask;
 
-public class ListActivity extends AppCompatActivity
+public class ListAudioActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_audio_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -78,12 +76,21 @@ public class ListActivity extends AppCompatActivity
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
-                ListView tx = (ListView)findViewById(R.id.listView);
-                tx.setAdapter( new PlayerListAdapter(ListActivity.this,(ArrayList) Audio.parseJson(response)) );
+                ListView tx = (ListView)findViewById(R.id.listAudioView);
+                tx.setAdapter( new PlayerListAdapter(ListAudioActivity.this,(ArrayList) Audio.parseJson(response)) );
             }
         });
 
+        VKRequest request_friends = new VKRequest("friends.get", VKParameters.from(VKApiConst.FIELDS, "id, first_name, last_name, photo_100, online",
+                VKParameters.from(VKApiConst.NAME_CASE, "nom")));
 
+        request_friends.executeWithListener(new VKRequest.VKRequestListener() {
+            @Override
+            public void onComplete(VKResponse response) {
+                ListView tx = (ListView)findViewById(R.id.listFriendsView);
+                tx.setAdapter( new FriendsListAdapter(ListAudioActivity.this,(ArrayList) Friend.parseJson(response)) );
+            }
+        });
 
     }
 
@@ -152,5 +159,11 @@ public class ListActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    public void openFriends(MenuItem item) {
+        ViewFlipper flipper = (ViewFlipper) findViewById(R.id.viewFlipper);
+        flipper.showNext();
     }
 }
