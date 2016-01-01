@@ -1,6 +1,5 @@
 package vne.vkmusic.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -38,10 +38,15 @@ import vne.vkmusic.utils.DownloadImageTask;
 public class ListAudioActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    private ViewFlipper viewFlipper;
+    float lastX;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_list);
+        ViewFlipper viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -91,22 +96,19 @@ public class ListAudioActivity extends AppCompatActivity
                 tx.setAdapter( new FriendsListAdapter(ListAudioActivity.this,(ArrayList) Friend.parseJson(response)) );
             }
         });
-
+        //(ListView) findViewById(R.id.listAudioView).setOnTouchListener();
     }
-
-    ///*
-
-    ///*
-
-
-
 
     @Override
     public void onBackPressed() {
+        viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if(viewFlipper.getDisplayedChild() == 1) {
+            viewFlipper.setDisplayedChild(0);
+        }
+        else {
             super.onBackPressed();
         }
     }
@@ -136,34 +138,69 @@ public class ListAudioActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        ViewFlipper flipper = (ViewFlipper) findViewById(R.id.viewFlipper);
         int id = item.getItemId();
 
-        /*
-        if (id == R.id.nav_camera) {
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
-
+        if (id == R.id.side_friends) {
+            flipper.setDisplayedChild(1);
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    /* Пробував робити свайп лефт-райт для переміщення
+        між списками друзів та пісень,
+        так і не вийшло. Може в тебе вийде доробити */
 
-    public void openFriends(MenuItem item) {
-        ViewFlipper flipper = (ViewFlipper) findViewById(R.id.viewFlipper);
-        flipper.showNext();
-    }
+
+       /* // Using the following method, we will handle all screen swaps.
+        public boolean onTouchEvent(MotionEvent touchevent) {
+            switch (touchevent.getAction()) {
+
+                case MotionEvent.ACTION_DOWN:
+                    lastX = touchevent.getX();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    float currentX = touchevent.getX();
+
+                    // Handling left to right screen swap.
+                    if (lastX < currentX) {
+
+                        // If there aren't any other children, just break.
+                        if (viewFlipper.getDisplayedChild() == 0)
+                            break;
+
+                        // Next screen comes in from left.
+                        viewFlipper.setInAnimation(this, R.readme.slide_in_from_left);
+                        // Current screen goes out from right.
+                        viewFlipper.setOutAnimation(this, R.readme.slide_out_to_right);
+
+                        // Display next screen.
+                        viewFlipper.showNext();
+                    }
+
+                    // Handling right to left screen swap.
+                    if (lastX > currentX) {
+
+                        // If there is a child (to the left), kust break.
+                        if (viewFlipper.getDisplayedChild() == 1)
+                            break;
+
+                        // Next screen comes in from right.
+                        viewFlipper.setInAnimation(this, R.readme.slide_in_from_right);
+                        // Current screen goes out from left.
+                        viewFlipper.setOutAnimation(this, R.readme.slide_out_to_left);
+
+                        // Display previous screen.
+                        viewFlipper.showPrevious();
+                    }
+                    break;
+            }
+            return false;
+        }*/
+
 }
+
+
+

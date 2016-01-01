@@ -9,8 +9,7 @@
         <item
             android:id="@+id/side_friends"
             android:icon="@mipmap/ic_friends"
-            android:title="@string/side_friends_audio"
-            android:onClick="openFriends"/>
+            android:title="@string/side_friends_audio"/>
         <item
             android:id="@+id/side_cached"
             android:icon="@mipmap/ic_cached"

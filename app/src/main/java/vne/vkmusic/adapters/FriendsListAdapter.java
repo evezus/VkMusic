@@ -24,7 +24,7 @@ public class FriendsListAdapter extends ArrayAdapter<Friend>{
         this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }
-
+    /* Адаптер, зроблений на основі PlayerListAdapter */
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewFriend friend;
         if (convertView == null) {
