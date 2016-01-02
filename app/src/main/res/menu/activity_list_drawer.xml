@@ -20,7 +20,7 @@
             android:title="@string/side_favorite" />
     </group>
 
-    <group>
+    <group android:id="@+id/menu_group_settings">
         <item
             android:id="@+id/side_settings"
             android:icon="@mipmap/ic_settings"

@@ -17,12 +17,10 @@ import vne.vkmusic.model.Audio;
 import vne.vkmusic.model.Friend;
 
 public class FriendsListAdapter extends ArrayAdapter<Friend> {
-    private ArrayList<Friend> listData;
     private LayoutInflater layoutInflater;
 
     public FriendsListAdapter(Context aContext, ArrayList<Friend> listData) {
         super(aContext, 0, listData);
-        this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }
 

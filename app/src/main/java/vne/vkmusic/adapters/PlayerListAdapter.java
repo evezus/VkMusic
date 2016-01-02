@@ -14,30 +14,32 @@ import vne.vkmusic.model.Audio;
 import vne.vkmusic.utils.Duration;
 
 public class PlayerListAdapter extends ArrayAdapter<Audio> {
-    private ArrayList<Audio> listData;
     private LayoutInflater layoutInflater;
 
     public PlayerListAdapter(Context aContext, ArrayList<Audio> listData) {
         super(aContext, 0, listData);
-        this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewAudio audio;
+        ViewAudio viewAudio;
+
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.item_list_audio, null);
-            audio = new ViewAudio();
-            audio.song_tittle = (TextView) convertView.findViewById(R.id.song_tittle);
-            audio.song_author = (TextView) convertView.findViewById(R.id.song_author);
-            audio.song_duration = (TextView) convertView.findViewById(R.id.song_duration);
-            convertView.setTag(audio);
+            viewAudio = new ViewAudio();
+            viewAudio.song_tittle = (TextView) convertView.findViewById(R.id.song_tittle);
+            viewAudio.song_author = (TextView) convertView.findViewById(R.id.song_author);
+            viewAudio.song_duration = (TextView) convertView.findViewById(R.id.song_duration);
+            convertView.setTag(viewAudio);
         } else {
-            audio = (ViewAudio) convertView.getTag();
+            viewAudio = (ViewAudio) convertView.getTag();
         }
-        audio.song_tittle.setText(listData.get(position).getTitle());
-        audio.song_author.setText(listData.get(position).getArtist());
-        audio.song_duration.setText(Duration.secondsToTimer(listData.get(position).getDuration()));
+
+        Audio audio = (Audio) getItem(position);
+        viewAudio.song_tittle.setText(audio.getTitle());
+        viewAudio.song_author.setText(audio.getArtist());
+        viewAudio.song_duration.setText(Duration.secondsToTimer(audio.getDuration()));
+
         return convertView;
     }
 
