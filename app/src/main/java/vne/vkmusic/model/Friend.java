@@ -13,16 +13,19 @@ import java.util.List;
 
 public class Friend {
 
-//Friend`s ID (identification code)
+    //Friend`s ID (identification code)
     private int id;
 
-// friend`s first name
+    // friend`s first name
     private String first_name;
 
-//...last name
+    //...last name
     private String last_name;
 
-//...and URL to his profile photo
+    private Boolean online;
+
+
+    //...and URL to his profile photo
     private String photo_url;
 
     public Boolean getOnline() {
@@ -32,8 +35,6 @@ public class Friend {
     public void setOnline(Boolean online) {
         this.online = online;
     }
-
-    private Boolean online;
 
     public void setId(int id) {
         this.id = id;
@@ -71,7 +72,7 @@ public class Friend {
         ArrayList<Friend> list = new ArrayList<>();
         try {
             JSONArray arr = response.json.getJSONObject("response").getJSONArray("items");
-            for (int i = 0; i< arr.length(); i++) {
+            for (int i = 0; i < arr.length(); i++) {
                 Friend friend = new Friend();
                 JSONObject json = arr.getJSONObject(i);
 
@@ -82,7 +83,7 @@ public class Friend {
                 friend.setOnline(json.optBoolean("online"));
                 list.add(friend);
             }
-        }catch (JSONException e){
+        } catch (JSONException e) {
             Log.d("JSONException", e.toString());
         }
         return list;

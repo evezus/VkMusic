@@ -9,7 +9,7 @@
         <item
             android:id="@+id/side_friends"
             android:icon="@mipmap/ic_friends"
-            android:title="@string/side_friends_audio"/>
+            android:title="@string/side_friends_audio" />
         <item
             android:id="@+id/side_cached"
             android:icon="@mipmap/ic_cached"
@@ -20,21 +20,20 @@
             android:title="@string/side_favorite" />
     </group>
 
-    <item android:title="">
-        <menu>
-            <item
-                android:id="@+id/side_settings"
-                android:icon="@mipmap/ic_settings"
-                android:title="@string/side_settings" />
-            <item
-                android:id="@+id/side_logout"
-                android:icon="@mipmap/ic_logout"
-                android:title="@string/side_logout" />
-            <item
-                android:id="@+id/side_exit"
-                android:icon="@mipmap/ic_exit"
-                android:title="@string/side_exit" />
-        </menu>
-    </item>
+    <group>
+        <item
+            android:id="@+id/side_settings"
+            android:icon="@mipmap/ic_settings"
+            android:title="@string/side_settings" />
+        <item
+            android:id="@+id/side_logout"
+            android:icon="@mipmap/ic_logout"
+            android:title="@string/side_logout" />
+        <item
+            android:id="@+id/side_exit"
+            android:icon="@mipmap/ic_exit"
+            android:title="@string/side_exit" />
+    </group>
+
 
 </menu>

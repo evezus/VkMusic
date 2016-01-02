@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (VKSdk.isLoggedIn()) {
             startActivity(new Intent(this, ListAudioActivity.class));
-            finish();
+            if(!VKSdk.isLoggedIn()) finish();
         }
 
         setContentView(R.layout.activity_login);

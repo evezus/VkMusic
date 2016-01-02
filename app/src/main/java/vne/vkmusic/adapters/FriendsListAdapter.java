@@ -13,9 +13,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import vne.vkmusic.R;
+import vne.vkmusic.model.Audio;
 import vne.vkmusic.model.Friend;
 
-public class FriendsListAdapter extends ArrayAdapter<Friend>{
+public class FriendsListAdapter extends ArrayAdapter<Friend> {
     private ArrayList<Friend> listData;
     private LayoutInflater layoutInflater;
 
@@ -24,31 +25,32 @@ public class FriendsListAdapter extends ArrayAdapter<Friend>{
         this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }
-    /* Адаптер, зроблений на основі PlayerListAdapter */
+
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewFriend friend;
+
+        ViewFriend viewFriend;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.item_list_friend, null);
-            friend = new ViewFriend();
-            friend.friend_first_name = (TextView) convertView.findViewById(R.id.friendName);
-            friend.friend_last_name = (TextView) convertView.findViewById(R.id.friendSurname);
-            friend.friend_photo = (ImageView) convertView.findViewById(R.id.friendPhoto);
-            convertView.setTag(friend);
+            convertView = layoutInflater.inflate(R.layout.item_list_friend, parent, false);
+            viewFriend = new ViewFriend();
+            viewFriend.all_friend = (TextView) convertView.findViewById(R.id.fullName);
+            viewFriend.friend_photo = (ImageView) convertView.findViewById(R.id.friendPhoto);
+            convertView.setTag(viewFriend);
         } else {
-            friend = (ViewFriend) convertView.getTag();
+            viewFriend = (ViewFriend) convertView.getTag();
         }
-        friend.friend_first_name.setText(listData.get(position).getFirst_name());
-        friend.friend_last_name.setText(listData.get(position).getLast_name());
+
+        Friend friend = (Friend) getItem(position);
+        viewFriend.all_friend
+                .setText(String.format("%s %s", friend.getFirst_name(), friend.getLast_name()));
         Picasso.with(getContext())
-                .load(listData.get(position).getPhoto_url())
-                .resize(100,100)
-                .into(friend.friend_photo);
+                .load(friend.getPhoto_url())
+                .resize(100, 100)
+                .into(viewFriend.friend_photo);
         return convertView;
     }
 
     static class ViewFriend {
-        TextView friend_first_name;
-        TextView friend_last_name;
+        TextView all_friend;
         ImageView friend_photo;
     }
 }

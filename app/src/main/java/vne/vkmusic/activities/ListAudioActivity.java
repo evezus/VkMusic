@@ -18,6 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.squareup.picasso.Picasso;
+import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKParameters;
@@ -40,7 +42,6 @@ public class ListAudioActivity extends AppCompatActivity
 
 
     private ViewFlipper viewFlipper;
-    float lastX;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,32 +69,43 @@ public class ListAudioActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Next screen comes in from left.
+        viewFlipper.setInAnimation(this, R.anim.slide_in_from_left);
+        // Current screen goes out from right.
+        viewFlipper.setOutAnimation(this, R.anim.slide_out_to_right);
+
         new UserService().getCurrentUser(new UserService.Listener() {
             @Override
             public void onFinished(VKApiUser user) {
-                new DownloadImageTask((ImageView) findViewById(R.id.userImg)).execute(user.photo_100);
+                Picasso.with(ListAudioActivity.this)
+                        .load(user.photo_100)
+                        .resize(100, 100)
+                        .into((ImageView)findViewById(R.id.userImg));
                 ((TextView) findViewById(R.id.userName)).setText(user.first_name + " " + user.last_name);
                 ((TextView) findViewById(R.id.userLink)).setText(UserService.USER_LINK + String.valueOf(user.id));
             }
         });
 
+
         VKRequest request = VKApi.audio().get();
         request.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
-                ListView tx = (ListView)findViewById(R.id.listAudioView);
-                tx.setAdapter( new PlayerListAdapter(ListAudioActivity.this,(ArrayList) Audio.parseJson(response)) );
+                ((ListView) findViewById(R.id.listAudioView))
+                        .setAdapter(new PlayerListAdapter(ListAudioActivity.this, (ArrayList) Audio.parseJson(response)));
             }
         });
 
-        VKRequest request_friends = new VKRequest("friends.get", VKParameters.from(VKApiConst.FIELDS, "id, first_name, last_name, photo_100, online",
+
+
+        VKRequest request_friends = new VKRequest("friends.get", VKParameters.from(VKApiConst.FIELDS, "id, first_name, last_name, photo_100",
                 VKParameters.from(VKApiConst.NAME_CASE, "nom")));
 
         request_friends.executeWithListener(new VKRequest.VKRequestListener() {
             @Override
             public void onComplete(VKResponse response) {
-                ListView tx = (ListView)findViewById(R.id.listFriendsView);
-                tx.setAdapter( new FriendsListAdapter(ListAudioActivity.this,(ArrayList) Friend.parseJson(response)) );
+                ((ListView) findViewById(R.id.listFriendsView))
+                        .setAdapter(new FriendsListAdapter(ListAudioActivity.this, (ArrayList) Friend.parseJson(response)));
             }
         });
         //(ListView) findViewById(R.id.listAudioView).setOnTouchListener();
@@ -105,10 +117,9 @@ public class ListAudioActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if(viewFlipper.getDisplayedChild() == 1) {
+        } else if (viewFlipper.getDisplayedChild() == 1) {
             viewFlipper.setDisplayedChild(0);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -141,65 +152,35 @@ public class ListAudioActivity extends AppCompatActivity
         ViewFlipper flipper = (ViewFlipper) findViewById(R.id.viewFlipper);
         int id = item.getItemId();
 
-        if (id == R.id.side_friends) {
-            flipper.setDisplayedChild(1);
+        switch (id) {
+            case R.id.side_my_audio:
+                this.setTitle("My music");
+                flipper.setDisplayedChild(0);
+                break;
+            case R.id.side_friends:
+                this.setTitle("Friends");
+                flipper.setDisplayedChild(1);
+                break;
+            case R.id.side_cached:
+                this.setTitle("My music");
+                break;
+            case R.id.side_favorite:
+                this.setTitle("Favorite");
+                break;
+            case R.id.side_settings:
+                this.setTitle("Settings");
+                break;
+            case R.id.side_logout:
+                VKSdk.logout();
+            case R.id.side_exit:
+                finish();
         }
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    /* Пробував робити свайп лефт-райт для переміщення
-        між списками друзів та пісень,
-        так і не вийшло. Може в тебе вийде доробити */
-
-
-       /* // Using the following method, we will handle all screen swaps.
-        public boolean onTouchEvent(MotionEvent touchevent) {
-            switch (touchevent.getAction()) {
-
-                case MotionEvent.ACTION_DOWN:
-                    lastX = touchevent.getX();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    float currentX = touchevent.getX();
-
-                    // Handling left to right screen swap.
-                    if (lastX < currentX) {
-
-                        // If there aren't any other children, just break.
-                        if (viewFlipper.getDisplayedChild() == 0)
-                            break;
-
-                        // Next screen comes in from left.
-                        viewFlipper.setInAnimation(this, R.readme.slide_in_from_left);
-                        // Current screen goes out from right.
-                        viewFlipper.setOutAnimation(this, R.readme.slide_out_to_right);
-
-                        // Display next screen.
-                        viewFlipper.showNext();
-                    }
-
-                    // Handling right to left screen swap.
-                    if (lastX > currentX) {
-
-                        // If there is a child (to the left), kust break.
-                        if (viewFlipper.getDisplayedChild() == 1)
-                            break;
-
-                        // Next screen comes in from right.
-                        viewFlipper.setInAnimation(this, R.readme.slide_in_from_right);
-                        // Current screen goes out from left.
-                        viewFlipper.setOutAnimation(this, R.readme.slide_out_to_left);
-
-                        // Display previous screen.
-                        viewFlipper.showPrevious();
-                    }
-                    break;
-            }
-            return false;
-        }*/
-
 }
 
 
